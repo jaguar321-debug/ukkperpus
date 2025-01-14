@@ -19,7 +19,7 @@
                             <div class="row mb-3">
                                 <!-- Judul Field -->
                                 <div class="col-md-6">
-                                    <div class="mb-3 position-relative">
+                                    <div class="mb-3 position-relative"> 
                                         <label for="judul">Judul</label>
      
                                         <input type="text" id="judul" name="judul" value="{{ old('judul', $buku->judul) }}"

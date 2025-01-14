@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
-use App\Models\Bukukategori;
 use App\Models\Kategori;
+use App\Models\Bukukategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BukukategoriController extends Controller
 {
@@ -91,6 +92,21 @@ class BukukategoriController extends Controller
     public function destroy(bukukategori $bukukategori)
     {
         $bukukategori->delete();
+        $this->reorderIds();
         return redirect()->route('bukukategoris.index')->with('success', 'jadwal dihapus dan ID diurutkan ulang dengan sukses.');
+    }
+
+    public function reorderIds()
+    {
+        $bukukategoris = Bukukategori::orderBy('id')->get();
+        $counter = 1;
+
+        foreach ($bukukategoris as $data) {
+            $data->id = $counter++;
+            $data->save();
+        }
+
+        // Setel ulang nilai auto-increment ke ID tertinggi + 1
+        DB::statement('ALTER TABLE bukukategoris AUTO_INCREMENT = ' . ($counter));
     }
 }

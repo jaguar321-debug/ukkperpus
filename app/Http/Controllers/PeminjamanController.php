@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
-use App\Models\Peminjaman;
 use App\Models\User;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
 {
@@ -36,15 +38,25 @@ class PeminjamanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'buku_id' => 'required',
+            'tanggal_peminjaman' => 'required',
+            'tanggal_pengembalian' => 'required',
+            'status_peminjaman' => 'required',
         ], [
-            'user_id.required' => 'User tidak boleh kosong',
             'buku_id.required' => 'Buku tidak boleh kosong',
+            'tanggal_peminjaman.required' => 'Buku tidak boleh kosong',
+            'tanggal_pengembalian.required' => 'Buku tidak boleh kosong',
+            'status_peminjaman.required' => 'Buku tidak boleh kosong',
         ]);
 
         // Simpan data
-        Peminjaman::create($request->all());
+        Peminjaman::create([
+            'user_id' => Auth::id(), // Mengambil ID user yang sedang login
+            'buku_id' => $request->buku_id,
+            'tanggal_peminjaman' => $request->tanggal_peminjaman,
+            'tanggal_pengembalian' => $request->tanggal_pengembalian,
+            'status_peminjaman' => $request->status_peminjaman,
+        ]);
 
         // Redirect jika berhasil
         return redirect()->route('peminjamen.index')->with('success', 'Pengguna berhasil ditambahkan.');
@@ -74,14 +86,23 @@ class PeminjamanController extends Controller
     public function update(Request $request, peminjaman $peminjaman)
     {
         $request->validate([
-            'user_id' => 'required',
             'buku_id' => 'required',
+            'tanggal_peminjaman' => 'required',
+            'tanggal_pengembalian' => 'required',
+            'status_peminjaman' => 'required',
         ], [
-            'user_id.required' => 'User tidak boleh kosong',
             'buku_id.required' => 'Buku tidak boleh kosong',
+            'tanggal_peminjaman.required' => 'Tanggal Pinjam tidak boleh kosong',
+            'tanggal_pengembalian.required' => 'Tanggal Kembali tidak boleh kosong',
+            'status_peminjaman.required' => 'Status tidak boleh kosong',
         ]);
 
-        $peminjaman->update($request->all());
+        $peminjaman->update([
+            'buku_id' => $request->buku_id,
+            'tanggal_peminjaman' => $request->tanggal_peminjaman,
+            'tanggal_pengembalian' => $request->tanggal_pengembalian,
+            'status_peminjaman' => $request->status_peminjaman,
+        ]);
         return redirect()->route('peminjamen.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
@@ -91,6 +112,21 @@ class PeminjamanController extends Controller
     public function destroy(peminjaman $peminjaman)
     {
         $peminjaman->delete();
+        $this->reorderIds();
         return redirect()->route('peminjamen.index')->with('success', 'jadwal dihapus dan ID diurutkan ulang dengan sukses.');
+    }
+
+    public function reorderIds()
+    {
+        $peminjamen = Peminjaman::orderBy('id')->get();
+        $counter = 1;
+
+        foreach ($peminjamen as $peminjaman) {
+            $peminjaman->id = $counter++;
+            $peminjaman->save();
+        }
+
+        // Setel ulang nilai auto-increment ke ID tertinggi + 1
+        DB::statement('ALTER TABLE peminjamen AUTO_INCREMENT = ' . ($counter));
     }
 }

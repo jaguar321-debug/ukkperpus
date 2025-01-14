@@ -12,7 +12,7 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <form action="{{ route('peminjamen.update', $peminjaman->id) }}" method="POST">
+                        <form action="{{ route('ulasans.update', $ulasan->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <!-- Grid untuk Judul dan Penulis -->
@@ -25,7 +25,7 @@
                                         <option value="" disabled>-- Pilih Pemilik --</option>
                                         @foreach ($bukus as $buku)
                                             <option value="{{ $buku->id }}"
-                                                {{ old('buku_id', $peminjaman->buku_id) == $buku->id ? 'selected' : '' }}>
+                                                {{ old('buku_id', $ulasan->buku_id) == $buku->id ? 'selected' : '' }}>
                                                 {{ $buku->judul }}
                                             </option>
                                         @endforeach
@@ -36,11 +36,11 @@
                                 </div>
                                 <!-- Judul Field -->
                                 <div class="col-md-6">
-                                    <label for="tanggal_peminjaman">Tanggal Pinjam</label>
-                                    <input type="text" id="tanggal_peminjaman" name="tanggal_peminjaman"
-                                        value="{{ old('tanggal_peminjaman', $peminjaman->tanggal_peminjaman) }}"
-                                        class="form-control @error('tanggal_peminjaman') is-invalid @enderror">
-                                    @error('tanggal_peminjaman')
+                                    <label for="rating">Rating</label>
+                                    <input type="text" id="rating" name="rating"
+                                        value="{{ old('rating', $ulasan->rating) }}"
+                                        class="form-control @error('rating') is-invalid @enderror">
+                                    @error('rating')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -48,27 +48,16 @@
                             <div class="row mb-3">
                                 <!-- Judul Field -->
                                 <div class="col-md-6">
-                                    <label for="tanggal_pengembalian">Tanggal Kembali</label>
-                                    <input type="text" id="tanggal_pengembalian" name="tanggal_pengembalian"
-                                        value="{{ old('tanggal_pengembalian', $peminjaman->tanggal_pengembalian) }}"
-                                        class="form-control @error('tanggal_pengembalian') is-invalid @enderror">
-                                    @error('tanggal_pengembalian')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="status_peminjaman">Status</label>
-                                    <input type="text" id="status_peminjaman" name="status_peminjaman"
-                                        value="{{ old('status_peminjaman', $peminjaman->status_peminjaman) }}"
-                                        class="form-control @error('status_peminjaman') is-invalid @enderror">
-                                    @error('status_peminjaman')
+                                    <label for="ulasan">Komentar</label>
+                                    <textarea class="form-control @error('ulasan') is-invalid @enderror" id="ulasan" name="ulasan">{{ old('ulasan', $ulasan->ulasan) }}</textarea>
+                                    @error('ulasan')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <!-- Buttons -->
                             <div class="d-flex justify-content-end mt-4">
-                                <a href="{{ route('peminjamen.index') }}"
+                                <a href="{{ route('ulasans.index') }}"
                                     class="btn btn-secondary me-2 d-flex align-items-center">
                                     <i class="bi bi-arrow-left me-1"></i> Kembali
                                 </a>

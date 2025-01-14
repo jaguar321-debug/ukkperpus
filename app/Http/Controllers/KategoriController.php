@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KategoriController extends Controller
 {
@@ -79,6 +80,21 @@ class KategoriController extends Controller
     public function destroy(kategori $kategori)
     {
         $kategori->delete();
+        $this->reorderIds();
         return redirect()->route('kategoris.index')->with('success', 'jadwal dihapus dan ID diurutkan ulang dengan sukses.');
+    }
+
+    public function reorderIds()
+    {
+        $kategoris = Kategori::orderBy('id')->get();
+        $counter = 1;
+
+        foreach ($kategoris as $kategori) {
+            $kategori->id = $counter++;
+            $kategori->save();
+        }
+
+        // Setel ulang nilai auto-increment ke ID tertinggi + 1
+        DB::statement('ALTER TABLE kategoris AUTO_INCREMENT = ' . ($counter));
     }
 }

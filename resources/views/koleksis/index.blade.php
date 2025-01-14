@@ -5,7 +5,9 @@
         </h2>
     </x-slot>
     <div class="container mt-4">
+        @if(Auth::user()->role === 'user')
         <a href="{{ route('koleksis.create') }}" class="btn btn-primary mb-3">Tambah</a>
+        @endif
 
         <style>
             table thead tr {
@@ -23,15 +25,18 @@
                     <th>No</th>
                     <th>Peminjam</th>
                     <th>Buku</th>
+                    @if(Auth::user()->role === 'user')
                     <th>Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
                 @foreach ($koleksis as $koleksi)
                     <tr>
                         <td>{{ $koleksi->id }}</td>
-                        <td>{{ $koleksi->user }}</td>
-                        <td>{{ $koleksi->book }}</td>
+                        <td>{{ $koleksi->user->name }}</td>
+                        <td>{{ $koleksi->buku->judul }}</td>
+                        @if(Auth::user()->role === 'user')
                         <td>
                             
                                 <a href="{{ route('koleksis.edit', $koleksi->id) }}"
@@ -47,6 +52,7 @@
                                 </button>
                             </form>
                         </td>
+                        @endif
                     </tr>
 
                     

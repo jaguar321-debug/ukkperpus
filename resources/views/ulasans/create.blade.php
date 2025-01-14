@@ -12,7 +12,7 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
-                        <form method="POST" action="{{ route('peminjamen.store') }}">
+                        <form method="POST" action="{{ route('ulasans.store') }}">
                             @csrf
                             <!-- Grid untuk Judul dan Penulis -->
                             <div class="row mb-3">
@@ -33,11 +33,11 @@
                                 </div>
                                 <!-- Penulis Field -->
                                 <div class="col-md-6">
-                                    <label for="tanggal_peminjaman">Tanggal Pinjam</label>
+                                    <label for="rating">Rating</label>
                                     <div class="mb-3 position-relative">
-                                        <input type="date" id="tanggal_peminjaman" name="tanggal_peminjaman" value="{{ old('tanggal_peminjaman') }}"
-                                            class="form-control @error('tanggal_peminjaman') is-invalid @enderror">
-                                        @error('tanggal_peminjaman')
+                                        <input type="number" id="rating" name="rating" value="{{ old('rating') }}"
+                                            class="form-control @error('rating') is-invalid @enderror">
+                                        @error('rating')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror   
                                     </div>
@@ -45,31 +45,20 @@
                             </div>
                             <!-- Grid untuk Judul dan Penulis -->
                             <div class="row mb-3">
-                                 <!-- Penulis Field -->
-                                 <div class="col-md-6">
-                                    <label for="tanggal_pengembalian">Tanggal Kembali</label>
+                                <!-- Judul Field -->
+                                <div class="col-md-6">
+                                    <label for="ulasan">Komentar</label>
                                     <div class="mb-3 position-relative">
-                                        <input type="date" id="tanggal_pengembalian" name="tanggal_pengembalian" value="{{ old('tanggal_pengembalian') }}"
-                                            class="form-control @error('tanggal_pengembalian') is-invalid @enderror">
-                                        @error('tanggal_pengembalian')
+                                        <textarea class="form-control @error('ulasan') is-invalid @enderror" id="ulasan" name="ulasan">{{ old('ulasan') }}</textarea>
+                                        @error('ulasan')
                                             <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror   
-                                    </div>
-                                </div>
-                                 <div class="col-md-6">
-                                    <label for="status_peminjaman">Status</label>
-                                    <div class="mb-3 position-relative">
-                                        <input type="date" id="status_peminjaman" name="status_peminjaman" value="{{ old('status_peminjaman') }}"
-                                            class="form-control @error('status_peminjaman') is-invalid @enderror">
-                                        @error('status_peminjaman')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror   
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             <!-- Buttons -->
                             <div class="d-flex justify-content-end mt-4">
-                                <a href="{{ route('peminjamen.index') }}"
+                                <a href="{{ route('ulasans.index') }}"
                                     class="btn btn-secondary me-2 d-flex align-items-center">
                                     <i class="bi bi-arrow-left me-1"></i> Kembali
                                 </a>
