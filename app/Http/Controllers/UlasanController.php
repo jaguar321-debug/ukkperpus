@@ -88,6 +88,7 @@ class UlasanController extends Controller
         ], [
             'user_id.required' => 'User tidak boleh kosong',
             'buku_id.required' => 'Buku tidak boleh kosong',
+            'ulasan.required' => 'Ulasan tidak boleh kosong'
         ]);
 
         $ulasan->update($request->all());

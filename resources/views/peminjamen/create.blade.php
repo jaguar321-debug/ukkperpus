@@ -7,7 +7,7 @@
                     <div class="card-header bg-primary text-white text-center py-3">
                         <h5 class="mb-0 d-flex align-items-center justify-content-center">
                             <i class="bi bi-person-plus me-2"></i>
-                            Form Tambah Ulasan
+                            Form Tambah Peminjaman
                         </h5>
                     </div>
                     <!-- Card Body -->
@@ -59,7 +59,7 @@
                                  <div class="col-md-6">
                                     <label for="status_peminjaman">Status</label>
                                     <div class="mb-3 position-relative">
-                                        <input type="date" id="status_peminjaman" name="status_peminjaman" value="{{ old('status_peminjaman') }}"
+                                        <input type="text" id="status_peminjaman" name="status_peminjaman" value="{{ old('status_peminjaman') }}"
                                             class="form-control @error('status_peminjaman') is-invalid @enderror">
                                         @error('status_peminjaman')
                                             <div class="invalid-feedback">{{ $message }}</div>

@@ -37,7 +37,7 @@
                                 <!-- Judul Field -->
                                 <div class="col-md-6">
                                     <label for="tanggal_peminjaman">Tanggal Pinjam</label>
-                                    <input type="text" id="tanggal_peminjaman" name="tanggal_peminjaman"
+                                    <input type="date" id="tanggal_peminjaman" name="tanggal_peminjaman"
                                         value="{{ old('tanggal_peminjaman', $peminjaman->tanggal_peminjaman) }}"
                                         class="form-control @error('tanggal_peminjaman') is-invalid @enderror">
                                     @error('tanggal_peminjaman')
@@ -49,7 +49,7 @@
                                 <!-- Judul Field -->
                                 <div class="col-md-6">
                                     <label for="tanggal_pengembalian">Tanggal Kembali</label>
-                                    <input type="text" id="tanggal_pengembalian" name="tanggal_pengembalian"
+                                    <input type="date" id="tanggal_pengembalian" name="tanggal_pengembalian"
                                         value="{{ old('tanggal_pengembalian', $peminjaman->tanggal_pengembalian) }}"
                                         class="form-control @error('tanggal_pengembalian') is-invalid @enderror">
                                     @error('tanggal_pengembalian')
